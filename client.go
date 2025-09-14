@@ -97,11 +97,12 @@ func (p *Provider) removeDNSEntry(ctx context.Context, domain string, record lib
 		return libdns.Record{}, err
 	}
 
+	rr := record.RR()
 	entry := transipdomain.DNSEntry{
-		Name:    record.Name,
-		Content: record.Data,
-		Type:    record.Type,
-		Expire:  int(record.TTL.Seconds()),
+		Name:    rr.Name,
+		Content: rr.Data,
+		Type:    rr.Type,
+		Expire:  int(rr.TTL.Seconds()),
 	}
 
 	err = p.repository.RemoveDNSEntry(domain, entry)
@@ -121,11 +122,12 @@ func (p *Provider) updateDNSEntry(ctx context.Context, domain string, record lib
 		return libdns.Record{}, err
 	}
 
+	rr := r.RR()
 	entry := transipdomain.DNSEntry{
-		Name:    record.Name,
-		Content: record.Data,
-		Type:    record.Type,
-		Expire:  int(record.TTL.Seconds()),
+		Name:    rr.Name,
+		Content: rr.Data,
+		Type:    rr.Type,
+		Expire:  int(rr.TTL.Seconds()),
 	}
 
 	err = p.repository.UpdateDNSEntry(domain, entry)
