@@ -68,7 +68,8 @@ func (p *Provider) addDNSEntry(ctx context.Context, domain string, record libdns
 
 	err := p.setupRepository()
 	if err != nil {
-		return libdns.Record{}, err
+		//return libdns.Record{}, err
+		return nil, err
 	}
 
 	rr := record.RR()
@@ -82,7 +83,8 @@ func (p *Provider) addDNSEntry(ctx context.Context, domain string, record libdns
 
 	err = p.repository.AddDNSEntry(domain, entry)
 	if err != nil {
-		return libdns.Record{}, err
+		//return libdns.Record{}, err
+		return nil, err
 	}
 
 	return record, nil
@@ -94,7 +96,8 @@ func (p *Provider) removeDNSEntry(ctx context.Context, domain string, record lib
 
 	err := p.setupRepository()
 	if err != nil {
-		return libdns.Record{}, err
+		//return libdns.Record{}, err
+		return nil, err
 	}
 
 	rr := record.RR()
@@ -107,7 +110,8 @@ func (p *Provider) removeDNSEntry(ctx context.Context, domain string, record lib
 
 	err = p.repository.RemoveDNSEntry(domain, entry)
 	if err != nil {
-		return libdns.Record{}, err
+		//return libdns.Record{}, err
+		return nil, err
 	}
 
 	return record, nil
@@ -119,7 +123,8 @@ func (p *Provider) updateDNSEntry(ctx context.Context, domain string, record lib
 
 	err := p.setupRepository()
 	if err != nil {
-		return libdns.Record{}, err
+		//return libdns.Record{}, err
+		return nil, err
 	}
 
 	rr := r.RR()
@@ -132,7 +137,8 @@ func (p *Provider) updateDNSEntry(ctx context.Context, domain string, record lib
 
 	err = p.repository.UpdateDNSEntry(domain, entry)
 	if err != nil {
-		return libdns.Record{}, err
+		//return libdns.Record{}, err
+		return nil, err
 	}
 
 	return record, nil
