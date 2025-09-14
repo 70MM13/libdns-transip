@@ -127,7 +127,7 @@ func (p *Provider) updateDNSEntry(ctx context.Context, domain string, record lib
 		return nil, err
 	}
 
-	rr := r.RR()
+	rr := record.RR()
 	entry := transipdomain.DNSEntry{
 		Name:    rr.Name,
 		Content: rr.Data,
