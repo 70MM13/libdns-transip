@@ -44,7 +44,7 @@ func (p *Provider) getDNSEntries(ctx context.Context, domain string) ([]libdns.R
 	for _, entry := range dnsEntries {
 		record := libdns.Record{
 			Name:  entry.Name,
-			Value: entry.Content,
+			Data: entry.Content,
 			Type:  entry.Type,
 			TTL:   time.Duration(entry.Expire) * time.Second,
 		}
@@ -65,7 +65,7 @@ func (p *Provider) addDNSEntry(ctx context.Context, domain string, record libdns
 
 	entry := transipdomain.DNSEntry{
 		Name:    record.Name,
-		Content: record.Value,
+		Content: record.Data,
 		Type:    record.Type,
 		Expire:  int(record.TTL.Seconds()),
 	}
@@ -89,7 +89,7 @@ func (p *Provider) removeDNSEntry(ctx context.Context, domain string, record lib
 
 	entry := transipdomain.DNSEntry{
 		Name:    record.Name,
-		Content: record.Value,
+		Content: record.Data,
 		Type:    record.Type,
 		Expire:  int(record.TTL.Seconds()),
 	}
@@ -113,7 +113,7 @@ func (p *Provider) updateDNSEntry(ctx context.Context, domain string, record lib
 
 	entry := transipdomain.DNSEntry{
 		Name:    record.Name,
-		Content: record.Value,
+		Content: record.Data,
 		Type:    record.Type,
 		Expire:  int(record.TTL.Seconds()),
 	}
