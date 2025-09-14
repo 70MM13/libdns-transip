@@ -24,6 +24,14 @@ func (p *Provider) setupRepository() error {
 	return nil
 }
 
+func (p *Provider) RRToRecord(r libdns.RR) libdns.Record {
+	record, err := libdns.RR.Parse(r)
+	if err != nil {
+		return nil
+	}
+	return record
+}
+
 func (p *Provider) getDNSEntries(ctx context.Context, domain string) ([]libdns.Record, error) {
 	p.mutex.Lock()
 	defer p.mutex.Unlock()
@@ -42,13 +50,13 @@ func (p *Provider) getDNSEntries(ctx context.Context, domain string) ([]libdns.R
 	}
 
 	for _, entry := range dnsEntries {
-		record := libdns.Record{
+		record := libdns.RR{
 			Name:  entry.Name,
 			Data: entry.Content,
 			Type:  entry.Type,
 			TTL:   time.Duration(entry.Expire) * time.Second,
 		}
-		records = append(records, record)
+		records = append(records, p.RRToRecord(record))
 	}
 
 	return records, nil
