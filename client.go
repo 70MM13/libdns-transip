@@ -71,11 +71,13 @@ func (p *Provider) addDNSEntry(ctx context.Context, domain string, record libdns
 		return libdns.Record{}, err
 	}
 
+	rr := record.RR()
+	
 	entry := transipdomain.DNSEntry{
-		Name:    record.RR.Name,
-		Content: record.RR.Data,
-		Type:    record.RR.Type,
-		Expire:  int(record.RR.TTL.Seconds()),
+		Name:    rr.Name,
+		Content: rr.Data,
+		Type:    rr.Type,
+		Expire:  int(rr.TTL.Seconds()),
 	}
 
 	err = p.repository.AddDNSEntry(domain, entry)
