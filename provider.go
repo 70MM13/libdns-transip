@@ -38,9 +38,10 @@ func (p *Provider) AppendRecords(ctx context.Context, zone string, records []lib
 	var appendedRecords []libdns.Record
 
 	for _, record := range records {
-
-		if record.TTL < time.Duration(300)*time.Second {
-			record.TTL = time.Duration(300) * time.Second
+		
+		rr := &record.RR()
+		if rr.TTL < time.Duration(300)*time.Second {
+			rr.TTL = time.Duration(300) * time.Second
 		}
 
 		newRecord, err := p.addDNSEntry(ctx, p.unFQDN(zone), record)
