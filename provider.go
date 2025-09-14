@@ -39,11 +39,12 @@ func (p *Provider) AppendRecords(ctx context.Context, zone string, records []lib
 
 	for _, record := range records {
 		
-		rr := &record.RR()
+		rr := record.RR()
 		if rr.TTL < time.Duration(300)*time.Second {
 			rr.TTL = time.Duration(300) * time.Second
 		}
-
+		record := libdns.RR (rr)
+		
 		newRecord, err := p.addDNSEntry(ctx, p.unFQDN(zone), record)
 		if err != nil {
 			return nil, err
@@ -64,7 +65,9 @@ func (p *Provider) DeleteRecords(ctx context.Context, zone string, records []lib
 		if err != nil {
 			return nil, err
 		}
-		deletedRecord.TTL = time.Duration(deletedRecord.TTL) * time.Second
+
+		rr := deletedRecord.RR()
+		rr.TTL = time.Duration(deletedRecord.TTL) * time.Second
 		deletedRecords = append(deletedRecords, deletedRecord)
 	}
 
